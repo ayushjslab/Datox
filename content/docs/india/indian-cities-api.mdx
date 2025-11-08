@@ -20,31 +20,26 @@ This is the root endpoint for all city-related API calls.
 
 ---
 
+| Parameter | Type     | Required | Description                                                                                               |
+| --------- | -------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `state`   | `string` | 🟢 Yes    | Name of the state (case-insensitive). Example: `"Rajasthan"`, `"Gujarat"`, `"Maharashtra"`, etc.          |
+| `limit`   | `number` | 🔴 No     | Limits how many cities are returned in one API call. Useful for pagination or restricting data.           |
+| `offset`  | `number` | 🔴 No     | Skips the specified number of cities before returning results. Used together with `limit` for pagination. |
+
+
+
 ## ⚙️ 1. Fetch All Cities of a State
 
 **Endpoint:**
 
 ```bash
-GET https://jsonly.vercel.app/api/india/cities?state=rajasthan
-```
-
-
-
-### 🧠 Description
-Retrieves the **complete list** of all cities belonging to a specific Indian state.
-
-### 📥 Query Parameters
-
-| Parameter | Type | Required | Description |
-|------------|------|-----------|--------------|
-| `state` | `string` | `true` | Name of the state (case-insensitive). Example: `"Rajasthan"`, `"Gujarat"`, `"Maharashtra"` |
-| `limit` | `number` | `false` | Defines how many cities to return in a single API call. Useful for pagination or limiting data. |
-| `offset` | `number` | `false` | Skips the specified number of cities before returning results. Used together with `limit` for paginated requests. |
-
-### 📤 Example Request
-```bash
 GET https://jsonly.vercel.app/api/india/cities?state=himachal%20pradesh
 ```
+
+<div className="border-l-4 border-blue-500 px-3 py-2 bg-blue-800/10 rounded-md text-sm leading-relaxed"> <strong className="italic text-blue-600">Note:</strong> In URLs, spaces are encoded as <code>%20</code>. Example: <code>himachal pradesh → himachal%20pradesh</code> </div>
+
+### 📤 output
+
 ```json
 {
   "success": true,
@@ -63,5 +58,63 @@ GET https://jsonly.vercel.app/api/india/cities?state=himachal%20pradesh
     "Kullu"
   ],
   "hasMore": false
+}
+```
+
+## ⚙️ 2. Fetch limited Cities of a State
+
+
+**Endpoint:**
+
+```bash
+GET https://jsonly.vercel.app/api/india/cities?state=himachal%20pradesh&limit=4
+```
+
+### 📤 output
+
+```json
+{
+  "success": true,
+  "state": "Himachal Pradesh",
+  "total": 7,
+  "limit": 4,
+  "offset": 0,
+  "count": 4,
+  "cities": [
+    "Shimla",
+    "Mandi",
+    "Solan",
+    "Nahan"
+  ],
+  "hasMore": true
+}
+```
+
+## ⚙️ 3. Fetch limited cities of a state with limit and offset.
+
+
+**Endpoint:**
+
+```bash
+GET https://jsonly.vercel.app/api/india/cities?state=himachal%20pradesh&limit=4&offset=2
+```
+
+### 📤 output
+
+```json
+{
+  "success": true,
+  "state": "Himachal Pradesh",
+  "total": 7,
+  "limit": 4,
+  "offset": 2,
+  "count": 4,
+  "cities": [
+    "Solan",
+    "Nahan",
+    "Sundarnagar",
+    "Palampur"
+  ],
+  "hasMore": true
 }
 ```

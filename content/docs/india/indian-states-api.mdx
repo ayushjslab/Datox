@@ -1,0 +1,163 @@
+---
+title: Indian States API
+description: API documentation for fetching Indian states using JSONly API.
+---
+
+# 🇮🇳 Indian States API
+
+This documentation explains how to use the **Indian States API** to retrieve a list of all Indian states available in the JSONly database.  
+All endpoints return **JSON responses**, suitable for integration with JavaScript, Python, or any HTTP client.
+
+---
+
+## 🔗 Base URL
+
+```bash
+GET https://jsonly.vercel.app/api/india/states
+```
+
+### 🧩 Query Parameters
+
+| Parameter | Type | Required | Description |
+|------------|------|-----------|--------------|
+| `limit` | `number` | `🔴 No` | Defines how many states to return in a single API call. Useful for pagination or limiting data. |
+| `offset` | `number` | `🔴 No` | Skips the specified number of states before returning results. Used together with `limit` for paginated requests. |
+
+## ⚙️ 1. Fetch all states
+
+**Endpoint:**
+
+```bash
+GET https://jsonly.vercel.app/api/india/states
+```
+### 📤 output
+
+```json
+{
+  "success": true,
+  "query": "",
+  "total": 34,
+  "limit": 34,
+  "offset": 0,
+  "count": 34,
+  "hasMore": false,
+  "states": [
+    "Andaman and Nicobar Islands",
+    "Haryana",
+    "Tamil Nadu",
+    "Madhya Pradesh",
+    "Jharkhand",
+    "Mizoram",
+    "Nagaland",
+    "Himachal Pradesh",
+    "Tripura",
+    "Andhra Pradesh",
+    "Punjab",
+    "Chandigarh",
+    "Rajasthan",
+    "Assam",
+    "Odisha",
+    "Chhattisgarh",
+    "Jammu and Kashmir",
+    "Karnataka",
+    "Manipur",
+    "Kerala",
+    "Delhi",
+    "Dadra and Nagar Haveli",
+    "Puducherry",
+    "Uttarakhand",
+    "Uttar Pradesh",
+    "Bihar",
+    "Gujarat",
+    "Telangana",
+    "Meghalaya",
+    "Himachal Praddesh",
+    "Arunachal Pradesh",
+    "Maharashtra",
+    "Goa",
+    "West Bengal"
+  ]
+}
+```
+
+## ⚙️ 2. Fetch states by similar name
+
+**Endpoint:**
+
+```bash
+GET https://jsonly.vercel.app/api/india/states?state=pradesh
+```
+
+### 📤 output
+
+```json
+{
+  "success": true,
+  "query": "pradesh",
+  "total": 5,
+  "limit": 34,
+  "offset": 0,
+  "count": 5,
+  "hasMore": false,
+  "states": [
+    "Madhya Pradesh",
+    "Himachal Pradesh",
+    "Andhra Pradesh",
+    "Uttar Pradesh",
+    "Arunachal Pradesh"
+  ]
+}
+```
+
+## ⚙️ 3. Fetch limited states
+
+**Endpoint:**
+
+```bash
+GET https://jsonly.vercel.app/api/india/states?limit=6
+```
+### 📤 output
+
+```json
+{
+  "success": true,
+  "query": "",
+  "total": 34,
+  "limit": 6,
+  "offset": 0,
+  "count": 6,
+  "hasMore": true,
+  "states": [
+    "Andaman and Nicobar Islands",
+    "Haryana",
+    "Tamil Nadu",
+    "Madhya Pradesh",
+    "Jharkhand",
+    "Mizoram"
+  ]
+}
+```
+## ⚙️ 4. Fetch limited states with limit and offset.
+
+**Endpoint:**
+
+### 📤 output
+
+```bash
+GET https://jsonly.vercel.app/api/india/states?state=pradesh&limit=2&offset=2
+```
+```json
+{
+  "success": true,
+  "query": "pradesh",
+  "total": 5,
+  "limit": 2,
+  "offset": 2,
+  "count": 2,
+  "hasMore": true,
+  "states": [
+    "Andhra Pradesh",
+    "Uttar Pradesh"
+  ]
+}
+```
