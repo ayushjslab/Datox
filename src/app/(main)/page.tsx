@@ -6,6 +6,10 @@ import Footer from "@/components/custom/footer"
 export default function Home() {
   return (
     <div>
+     <Script
+        src="https://echomark.vercel.app/widget.js?siteId=691957c6460be5c6953072de"
+        strategy="afterInteractive"
+      />
       <Hero />
       <Example/>
       <ShowCase/>
