@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { COUNTRIES_DIAL } from "@/json/countries/country-dial";
+import {CORS} from "@/lib/cors"
+
+export async function OPTIONS() {
+  return CORS(NextResponse.json({}, { status: 200 }));
+}
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,19 +27,23 @@ export async function GET(req: NextRequest) {
     const paginated = filtered.slice(offset, offset + limit);
     const hasMore = offset + limit < filtered.length;
 
-    return NextResponse.json({
-      success: true,
-      total: filtered.length,
-      limit,
-      offset,
-      hasMore,
-      data: paginated,
-    });
+    return CORS(
+      NextResponse.json({
+        success: true,
+        total: filtered.length,
+        limit,
+        offset,
+        hasMore,
+        data: paginated,
+      })
+    );
   } catch (error) {
     console.error("Error in /dialcodes API:", error);
-    return NextResponse.json(
-      { success: false, message: "Internal Server Error" },
-      { status: 500 }
+    return CORS(
+      NextResponse.json(
+        { success: false, message: "Internal Server Error" },
+        { status: 500 }
+      )
     );
   }
 }
