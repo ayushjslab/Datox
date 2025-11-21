@@ -1,0 +1,19 @@
+{
+  "title": "API's",
+  "description": "Useful Data API's",
+  "icon": "Dna",
+  "root": true,
+  "page": [
+    { "label": "Get Started" },
+    "index",
+
+    { "label": "Countries" },
+    "countries/countries-flag",
+    "countries/country-dial-code",
+
+    { "label": "India" },
+    "india/indian-cities-api",
+    "india/indian-railway-station",
+    "india/indan-states-api"
+  ]
+}
