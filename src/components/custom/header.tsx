@@ -1,76 +1,110 @@
 "use client";
+
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import Link from "next/link";
+import clsx from "clsx";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Add URLs corresponding to nav items
-  const navItems = [
+  const navItems: { name: string; url: string; external?: boolean }[] = [
     { name: "Home", url: "/" },
     { name: "Docs", url: "/docs" },
-    { name: "Github", url: "https://github.com/ayushjslab/jsonly", external: true },
+    {
+      name: "Github",
+      url: "https://github.com/ayushjslab/jsonly",
+      external: true,
+    },
     { name: "Contact", url: "/contact" },
     { name: "Blog", url: "/blog" },
   ];
 
-  return (
-    <header className="bg-transparent backdrop-blur-2xl shadow-lg sticky top-0 z-50">
-      <div className="flex items-center justify-between px-6 py-4 md:px-8">
-        <div className="text-4xl font-bold text-white tracking-wide hover:text-emerald-400 transition-colors duration-300 cursor-pointer ml-10">
-          <Link href="/">
-            {" "}
-            <span className="text-emerald-400">JSON</span>ly
-          </Link>
-        </div>
+  const closeMenu = () => setMenuOpen(false);
 
-        <ul className="hidden md:flex items-center gap-8 list-none text-white mr-10">
+  return (
+    <header className="bg-transparent backdrop-blur-xl shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="text-3xl font-bold tracking-wide text-white hover:text-emerald-400 transition-colors"
+        >
+          <span className="text-emerald-400">JSON</span>ly
+        </Link>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center gap-10 text-white">
           {navItems.map((item) => (
             <li
               key={item.name}
-              className="relative cursor-pointer text-xl font-semibold transition-all duration-300 hover:text-emerald-400 group"
+              className="relative font-semibold text-lg cursor-pointer group transition-all"
             >
               {item.external ? (
-                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   {item.name}
                 </a>
               ) : (
-                <Link href={item.url}>{item.name}</Link>
+                <Link
+                  href={item.url}
+                  className="hover:text-emerald-400 transition-colors"
+                >
+                  {item.name}
+                </Link>
               )}
-              <span className="absolute left-0 -bottom-1 w-0 h-1 bg-emerald-400 transition-all duration-300 group-hover:w-full rounded"></span>
+
+              {/* Underline animation */}
+              <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-emerald-400 transition-all duration-300 group-hover:w-full rounded"></span>
             </li>
           ))}
         </ul>
 
-        <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-white text-3xl focus:outline-none cursor-pointer"
-          >
-            {menuOpen ? <HiX /> : <HiMenu />}
-          </button>
-        </div>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden text-white text-3xl"
+          aria-label="Toggle Menu"
+        >
+          {menuOpen ? <HiX /> : <HiMenu />}
+        </button>
       </div>
 
-      {menuOpen && (
-        <ul className="flex flex-col gap-4 px-6 pb-4 md:hidden text-white">
-          {navItems.map((item) => (
-            <li
-              key={item.name}
-              className="cursor-pointer text-lg font-semibold hover:text-emerald-400 transition-colors duration-300"
-            >
-              {item.external ? (
-                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                  {item.name}
-                </a>
-              ) : (
-                <Link href={item.url}>{item.name}</Link>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Mobile Menu */}
+      <div
+        className={clsx(
+          "md:hidden flex flex-col gap-4 px-6 py-4 text-white transition-all duration-300 overflow-hidden",
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        )}
+      >
+        {navItems.map((item) => (
+          <div key={item.name} className="font-semibold text-lg">
+            {item.external ? (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMenu}
+                className="hover:text-emerald-400 transition-colors"
+              >
+                {item.name}
+              </a>
+            ) : (
+              <Link
+                href={item.url}
+                onClick={closeMenu}
+                className="hover:text-emerald-400 transition-colors"
+              >
+                {item.name}
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
     </header>
   );
 };
